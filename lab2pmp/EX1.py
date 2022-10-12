@@ -4,10 +4,24 @@ from scipy import stats
 import matplotlib.pyplot as plt
 import arviz as az
 
-omega_1 = stats.expon.rvs(0, 1 / 4, size=10000)
-omega_2 = stats.expon.rvs(0, 1 / 6, size=10000)
+np.random.seed(1)
 
-M = (omega_1 + omega_2) / 2
+x = stats.expon.rvs(1 / 4, size=10000)
+y = stats.expon.rvs(1 / 6, size=10000)
+z = stats.binom.rvs(1, 0.4, size=10000)
 
-az.plot_posterior({'Timp mecanic 1': omega_1, 'Timp mecanic 2': omega_2, 'Media': M})
+list = []
+for i in range(1, 10000):
+    if z[i] == 0:
+        list.append(x[i])
+    elif z[i] == 1:
+        list.append(y[i])
+
+az.plot_posterior(
+    {'list': list})
+
+print("Media este: ", np.mean(list))
+print("Distributia este: ", np.std(list))
+print("")
+
 plt.show()

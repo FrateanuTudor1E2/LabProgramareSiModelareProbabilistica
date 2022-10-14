@@ -3,10 +3,12 @@ from scipy import stats
 
 import matplotlib.pyplot as plt
 import arviz as az
+
+
 x = stats.expon.rvs(0.3, size=10)
 y = stats.expon.rvs(0.7, size=10)
-
 z = stats.binom.rvs(1, 0.3, size=10)
+
 list3 = []
 list4 = []
 list5 = []

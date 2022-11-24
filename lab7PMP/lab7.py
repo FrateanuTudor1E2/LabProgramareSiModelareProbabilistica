@@ -23,4 +23,19 @@ with ex1_model:
     regr_like = pm.Normal('regr_like', mu = mu, sigma = sigma, observed = price)
     step = pm.Slice()
     idata = pm.sample(100, return_inferencedata = True, cores=4, step = step)
+#ex2
+get_estimates_beta1_beta2_model = pm.Model()
+with get_estimates_beta1_beta2_model:
+    alpha = pm.Normal('alpha', mu=0, sigma=10)
+    beta1 = pm.Normal('beta1', mu=0, sigma=10)
+    beta2 = pm.Normal('beta2', mu=0, sigma=10)
+    sigma = pm.HalfNormal('sigma', sigma=1)
+
+    mu = pm.Deterministic('mu', alpha + beta1 * mhz + beta2 * np.log(hd))
+    regr_like = pm.Normal('regr_like', mu = mu, sigma = sigma, observed = price)
+    step = pm.Slice()
+    idata = pm.sample(100, return_inferencedata = True, cores=4, step = step)
+    trace = idata.posterior
+    beta1_estimates = trace['beta1']
+    beta2_estimates = trace['beta2']
 

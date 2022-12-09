@@ -42,12 +42,12 @@ def main():
             eps = pm.HalfNormal('eps', 5)
             miu = alpha + pm.math.dot(beta, x_1s)
             y_pred = pm.Normal('y_pred', mu=miu, sd=eps, observed=y_1s)
-            idata_p = pm.sample(22, tune=22, return_inferencedata=True)
+            idata_c = pm.sample(22, tune=22, return_inferencedata=True)
 
-    cmp_df1 = az.compare({'model_l': idata_l, 'model_p': idata_p, 'model_c': idata_p},
+    cmp_df1 = az.compare({'model_l': idata_l, 'model_p': idata_p, 'model_c': idata_c},
 
                              method='BB-pseudo-BMA', ic="waic", scale="deviance")
-    cmp_df2 = az.compare({'model_l': idata_l, 'model_p': idata_p, 'model_c': idata_p},
+    cmp_df2 = az.compare({'model_l': idata_l, 'model_p': idata_p, 'model_c': idata_c},
 
                              method='BB-pseudo-BMA', ic="psis_loo-cv", scale="deviance")
     print(cmp_df1)
